@@ -6,7 +6,7 @@ from discord.ext import commands
 import os
 import asyncio
 import pyfiglet
-
+from keep_alive import *
 # Initialize logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s"
@@ -40,6 +40,7 @@ async def main():
                     logging.error(f"Error loading {filename}: {e}")
         await bot.start(os.environ["token"])
 
+keep_alive()
 
 try:
     asyncio.run(main())
@@ -47,3 +48,4 @@ except (discord.errors.HTTPException, discord.app_commands.errors.CommandInvokeE
     logging.error("Being Rate Limited!")
     os.system("kill 1")  # Kill the current running process
     os.system("python restart.py")
+    asyncio.run(main())
